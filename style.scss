@@ -1,0 +1,33 @@
+@function rgb($hexcolor) {
+  $red: red($hexcolor);
+  $green: green($hexcolor);
+  $blue: blue($hexcolor);
+  $alpha: alpha($hexcolor);
+  @return unquote("rgb(#{$red},#{$green},#{$blue})");
+}
+
+:root {
+  --color: #{rgb(#00ff00)};
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @function display-p3($hexcolor) {
+    $red: red($hexcolor);
+    $green: green($hexcolor);
+    $blue: blue($hexcolor);
+    $alpha: alpha($hexcolor);
+    @return unquote("color(display-p3 #{$red} #{$green} #{$blue} / #{$alpha})");
+  }
+
+  :root {
+    --color: #{display-p3(#00ff00)};
+  }
+}
+
+div {
+  background-color: var(--color);
+}
+
+div.plain-hex {
+  background-color: #00ff00;
+}
